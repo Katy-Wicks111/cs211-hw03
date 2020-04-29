@@ -41,21 +41,10 @@ static struct vote_count* vc_find_name ( vote_count_t vc , const char * name )
     return NULL;
 }
 
-//Returns a pointer to the first element of 'vc' whose 'candidate' is NULL,     
-// or NULL if 'vc' is full.                                                     
-static struct vote_count* vc_find_empty(vote_count_t vc);
-{
-}
-
-// Clones a string onto the heap, printing a message to stderr and exiting with
-// code 1 if malloc() fails.                                                    
-static char* strdup_or_else(const char* src)
-{
-}
 
 vote_count_t vc_create(void)
 {
-    sizze_t i = 0;
+    size_t i = 0;
     vote_count_t result = malloc(MAX_CANDIDATES * sizeof(struct vote_count));
     while (result[i] != NULL && i < MAX_CANDIDATES) {
         result[i].candidate = NULL;
@@ -67,21 +56,43 @@ vote_count_t vc_create(void)
 
 void vc_destroy(vote_count_t vc)
 {
-    size_t i = 0;
-    while (i < MAX_CANDIDATES && vc[i].candidate != NULL) {
-        free(vc->candidate);
-	vc = vc	+ 1;
-        i = i + 1;
-    }
+
+    
 }
+
+//returns a pointer to the first element of 'vc' whose 'candidate/ is NULL
+//or NULL if 'vc' is full
+static struct vote_count* vc_find_empty(vote_count_t vc)
+{
+    size_t i=0;
+    (while vc[i] != NULL)
+    {
+        i= i+1;
+    }
+    return vc[i]; //am I returning the pointer or the value rn?
+}
+
 
 size_t* vc_update(vote_count_t vc, const char *name)
 {
     //
-    // TODO: replace with your code:
+   vote_count match_element= vc_find_name(vc, name); //should i have the *?
+    
+    if( match_element != NULL) //should it be *name? or *match_element, am i supposed to use *?
+    {
+        return match_element -> count; //maybe i neeed to chill on the arrow?
+    } 
+    else{
+        vote_count next= vc_find_empty(vc);
+        struct vote_count new_element= {name, 0};
+        *next= new_element;
+        return next -> count;
+    }
+ 
     //
     return NULL;
 }
+
 
 size_t vc_lookup(vote_count_t vc, const char* name)
 {
